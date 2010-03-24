@@ -3,3 +3,6 @@ channel:  "#es.wikipedia"
 server:   browne.wikimedia.org
 port:     6667
 user:     schrader
+site:     "http://es.wikipedia.org"
+api:      "http://es.wikipedia.org/w/api.php"
+

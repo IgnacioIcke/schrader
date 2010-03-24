@@ -13,9 +13,9 @@ Thread.new() { bot.run()}
 
 port = (ARGV[0] || 3000).to_i
 
-api = Mediawiki.new(Userconf['user'], Userconf['password'], Userconf['api'])
+api = Mediawiki.new(Userconf['user'], Userconf['password'], Configuration['api'])
 
-webserver = Webserver.new(port, api)
+webserver = Webserver.new(port, api, Configuration['site'], Userconf['admin'])
 Thread.new() {webserver.run() }
 
 while 1
