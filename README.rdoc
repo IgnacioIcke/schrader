@@ -10,6 +10,12 @@ You need
 * An instance of mongoDB running
 * mongo gem (gem install mongo)
 
+== Usage
+
+ruby schrader.rb
+
+and point your browser to http://localhost:3000
+
 == License 
 
 Schrader is licensed under GPLv3 (see LICENSE)
