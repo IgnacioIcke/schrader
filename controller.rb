@@ -8,18 +8,18 @@ class Controller
     def getBinding
         binding
     end
-    # binds the templates with the data
-    # [_headAndFooter_] Determines if TemplateHeader and TemplateFooter should
-    # be included.
-    def generateHtml(headAndFooter = true)
+    # binds the templates with the data including header and footer
+    def generateHtml
         headerhtml = ERB.new(TemplateHeader)
         footerhtml = ERB.new(TemplateFooter)
         rhtml = ERB.new(@template)
-        if headAndFooter
-            html = headerhtml.result(getBinding)+rhtml.result(getBinding)+footerhtml.result(getBinding) 
-        else
-            html = rhtml.result(getBinding)
-        end
+        html = headerhtml.result(binding)+rhtml.result(binding)+footerhtml.result(binding) 
+        return html
+    end
+    # binds the templates with the data without header and footer
+    def generateRawHtml
+        rhtml = ERB.new(@template)
+        html = rhtml.result(getBinding)
         return html
     end
 end

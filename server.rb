@@ -29,22 +29,22 @@ class Webserver
                 when /^\/$/
                     session.print "HTTP/1.1 200/OK\r\nContent-type: text/html\r\n\r\n"
                     session.print showDiff
-                    session.close
                 when /^\/rollback\?user=(.*)&page=(.*)$/
                     session.print "HTTP/1.1 200/OK\r\nContent-type: text/html\r\n\r\n"
                     session.print @api.rollback(CGI::unescape($1), CGI::unescape($2))
-                    session.close
                 when /^\/main\.css$/
                     file = File.open('webstuff/main.css')
                     session.print file.read
-                    session.close
                     file.close
                 when /^\/icons-simple\.png$/
                     file = File.open('webstuff/icons/icons-simple.png', 'rb')
                     session.write file.read
-                    session.close
                     file.close
+                else
+                    puts "unable to handle #{gets}"
+                    session.print "HTTP/1.1 404/Not Found\r\nContent-type: text/html\r\n\r\n"
                 end
+                session.close
             else
                 session.print "HTTP/1.1 404/Not Found\r\n\r\n"
                 session.close

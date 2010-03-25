@@ -7,8 +7,9 @@ require "socket"
 
 class IRC
     # Sends a message to the server
-    def send(s)
-        @irc.send "#{s}\n", 0
+    # _what_ what to send
+    def send(what)
+        @irc.send "#{what}\n", 0
     end
 
     # Connects to the server
@@ -22,10 +23,10 @@ class IRC
 
     # Handle irc stuff that sends the server
     #
-    # _s_ is the input
+    # _what_ is the input
 
-    def handle_server_input(s)
-        case s.strip
+    def handle_server_input(what)
+        case what.strip
             when /^PING :(.+)$/i
                 puts "[ Server ping ]"
                 send "PONG :#{$1}"
@@ -43,7 +44,7 @@ class IRC
             when /^:(.+?)!(.+?)@(.+?)\sKICK\s#(.+)\s(\S+)\s:(.+)$/i 
                 on_kick($1, $5, $4)
             else
-                puts s
+                puts what
         end
     end
 
@@ -76,7 +77,7 @@ class IRC
         while true
             ready = select([@irc, $stdin], nil, nil, nil)
             next if !ready
-            for s in ready[0]
+            ready[0].each do |s|
                 if s == $stdin then
                     return if $stdin.eof
                     s = $stdin.gets

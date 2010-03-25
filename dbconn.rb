@@ -16,7 +16,7 @@ class Database
     end
     #Reset the DB
     def reset
-        m = Mongo::Connection.new # (optional host/port args)
-        m.drop_database('schrader')
+        connection = Mongo::Connection.new # (optional host/port args)
+        connection.drop_database('schrader')
     end
 end
