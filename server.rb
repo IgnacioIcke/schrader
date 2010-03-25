@@ -3,7 +3,12 @@ require 'dbconn'
 require 'controller'
 require 'cgi'
 
+# Class that represents a simple web server
 class Webserver
+    # [_port_] Port we are listening to
+    # [_api_] rbmediawiki API class
+    # [_site_] Url of the wiki
+    # [_isAdmin_] Whether the user is admin of the wiki or not 
     def initialize(port, api, site, isAdmin)
         @port = port
         @server = TCPServer.new('localhost', port)
@@ -13,6 +18,8 @@ class Webserver
         @site = site
         @isAdmin = true
     end
+
+    # Main handler. Handles the different requests.
     def run
         while (session = @server.accept)
             gets = session.gets
@@ -44,6 +51,8 @@ class Webserver
             end
         end
     end
+
+    # Calls the controller ShowDiffController and sends the html to the client
     def showDiff 
         rc = @rcs.find_one()
         puts rc.inspect()

@@ -1,0 +1,11 @@
+= Schrader 
+
+Schrader is a tool for patrolling MediaWiki projects
+
+== Requeriments
+
+You need 
+* ruby 1.8
+* rbmediawiki gem (gem install rbmediawiki)
+* An instance of mongoDB running
+* mongo gem (gem install mongo)

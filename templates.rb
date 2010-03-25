@@ -1,3 +1,5 @@
+# Contains templates for the actions
+
 require "erb"
 require 'r18n-desktop'
 
