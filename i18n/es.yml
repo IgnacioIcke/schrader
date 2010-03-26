@@ -14,3 +14,9 @@ contributions: Contribuciones
 whitelist: Añadir usuario a lista blanca
 nodiffs: No hay cambios recientes sin revisar. Recarga en algunos segundos.
 unreviewed: "RCs sin revisar: "
+revertedFirst: "Alguien revirtió antes en "
+rollbacked: "Revertido "
+"on": en
+whitelisted: " añadido a la lista blanca"
+noRcs: "No hay diffs sin revisar"
+wait: "Wait for it..."

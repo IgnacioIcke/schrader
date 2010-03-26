@@ -110,17 +110,21 @@ TemplateDiff = %{
         function newMessage(){
             window.open('<%= @site %>/w/index.php?title=User_Talk:<%= @user %>&action=edit&section=new');
         }
+        function cleanRc(){
+            $.ajax({
+                url: '/cleanRc'
+            }); 
+            next();
+        }
     </script>
-    <%= ShowLogController.new(@numdiffs, @log).generateRawHtml %>
+    <%= ShowLogSnippetController.new(@numdiffs, @log).generateRawHtml %>
     <div class="buttons">
     <button class="icon icon-next" onClick="next()" title="<%= t.next %> (space)"></button>
     <button class="icon icon-revert" onClick="rollback()" title="<%= t.rollback %> (x)"></button>
-    <button class="icon icon-revertwarn" onClick="revertAndWarn()" title="<%= t.rollbackandwarn %> (a)"></button>
-    <button class="icon icon-warn" onClick="warn()" title="<%= t.warn %> (w)" ></button>
+    <!--<button class="icon icon-revertwarn" onClick="revertAndWarn()" title="<%= t.rollbackandwarn %> (a)"></button>
+    <button class="icon icon-warn" onClick="warn()" title="<%= t.warn %> (w)" ></button>-->
     <button class="icon icon-block" onClick="block()" title="<%= t.block %> (b)"></button>
     <button class="icon icon-delete" onClick="deleteArt()" title="<%= t.delete %> (d)"></button>
-    </div>
-    <div class="buttons">
     <button class="icon icon-whitelist" onClick="whitelist()" title="<%= t.whitelist %> (l)"></button>
     <button class="icon icon-view" onClick="view()" title="<%= t.viewpage %> (v)"></button>
     <button class="icon icon-edit" onClick="edit()" title="<%= t.edit %> (e)" ></button>
@@ -128,31 +132,54 @@ TemplateDiff = %{
     <button class="icon icon-talk" onClick="talk()" title="<%= t.usertalk %> (t)"></button>
     <button class="icon icon-newmsg" onClick="newMessage()" title="<%= t.newmessage %> (n)"></button>
     </div>
+    <div id="titlediv">
+        <h1 id="title" onClick="view()"><%= @page %></h1>
+        <a href="<%= @site %>/wiki/User:<%= @user %>"><%= @user %></a> (<a href="<%= @site %>/wiki/User_Talk:<%= @user %>"><%= t.talk %></a>|<a href="<%= @site %>/wiki/Special:Contributions/<%= @user %>"><%= t.contributions %></a>)
+    </div>
     <center>
-    <h1><%= @page %></h1>
-    <span class="centered"><a href="<%= @site %>/wiki/User:<%= @user %>"><%= @user %></a> (<a href="<%= @site %>/wiki/User_Talk:<%= @user %>"><%= t.talk %></a>|<a href="<%= @site %>/wiki/Special:Contributions/<%= @user %>"><%= t.contributions %></a>) </span>
     <table class="diff">
     <col class="diff-marker"/>
     <col class="diff-content"/>
     <col class="diff-marker"/>
     <col class="diff-content"/>
     <%= @htmldiff %></table>
-    <center>
+    </center>
 }
 
-#Shows the log and the number of unreviewed RCs
+#When there are no rcs
 TemplateLog = %{
+    <script type="text/javascript">
+    function cleanRc(){
+        return true;
+    }
+    </script>
+    <%= ShowLogSnippetController.new(@numdiffs, @log).generateRawHtml %>
+    <div id="titlediv">
+    <h1 id="title"><%= t.noRcs %></h1>
+    <p><%= t.wait %></p>
+    </div>
+    <div id="waiting"></div>
+}
+
+
+#Shows the log and the number of unreviewed RCs
+TemplateLogSnippet = %{
     <script type="text/javascript">
         $(document).ready(function()
         {
             var refreshId = setInterval(function()
             {
                 $('#log').load('/log');
+                if ($('#waiting').size()){
+                    if ($('#rcCount').text != 0){
+                        location.href = '/';
+                    }
+                }
             }, 3000);
         });
     </script>
     <div id="log">
-    <div id ="status"><%= t.unreviewed %><span id="rcCount"><%= @numdiffs.to_s %></span></div>
+    <div id ="status"><%= t.unreviewed %><span id="rcCount"><%= @numdiffs.to_s %></span><img src="removerc.png" onclick="cleanRc()" title="<%= t.clean %>"/></div>
     <ul id ="loglines">
         <% if @log %>
             <% @log.each do |logline|%>

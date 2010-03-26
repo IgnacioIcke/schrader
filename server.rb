@@ -33,19 +33,21 @@ class Webserver
                  page = CGI::unescape($2)
                  rolled = @api.rollback(user, page)
                  if rolled 
-                     @db.insertLog("Rollback #{user} on #{page}")
+                     @db.insertLog(t.rollbacked + user + " "+ t.on+" "+page)
                  else
-                     @db.insertLog("Someone reverted first at #{page}!")
+                     @db.insertLog(t.revertedFirst + page)
                  end
              when /^\/log$/
-                 controller = ShowLogController.new(@db.countRcs, @db.retrieveLog(5))
+                 controller = ShowLogSnippetController.new(@db.countRcs, @db.retrieveLog(5))
                  session.print controller.generateRawHtml
+
+             when /^\/cleanRc$/
+                 @db.cleanRc()
 
              when /^\/whitelist\?user=(.*)$/
                  user = CGI::unescape($1)
                  @db.addWL(user)
-                 @db.insertLog("#{user} added to whitelist")
-                 session.print "added to whitelist"
+                 @db.insertLog(user + t.whitelisted)
 
              when /^\/main\.css$/
                  session.print "HTTP/1.1 200/OK\r\nContent-type: text/css\r\n\r\n"
@@ -58,6 +60,10 @@ class Webserver
                  file.close
              when /^\/favicon\.ico$/
                  file = File.open('webstuff/favicon.ico', 'rb')
+                 session.write file.read
+                 file.close
+             when /^\/removerc\.png$/
+                 file = File.open('webstuff/removerc.png', 'rb')
                  session.write file.read
                  file.close
              else

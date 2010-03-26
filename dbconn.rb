@@ -51,6 +51,11 @@ class Database
         createRcTable
     end
 
+    #clean Rc: set us up to date
+    def cleanRc
+        @rcs.update(:reviewed => 1)
+    end
+
     # Drops the Rc table and creates it again
     def resetLog
         @db.drop_table(:log)

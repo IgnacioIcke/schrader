@@ -143,8 +143,6 @@ span.diff-html-changed:hover span.tip {
 /*Icons*/
 .buttons{
   float:left;
-  margin: 0 auto;
-  width: 300px;
 }
 
 .icon{
@@ -211,24 +209,26 @@ span.diff-html-changed:hover span.tip {
 /*End of icons-simple*/
 
 
-.centered{
-  margin: 0 auto;
-  clear: both;
-}
-
 body{
-  font-family:Helvetica,Arial,Verdana,sans-serif;
+  font-family: Helvetica,Arial,Verdana,sans-serif;
+  margin: 5px;
 }
 
-h1{
-  clear: both;
+h1#title{
   font-size: 36;
   color: #777;
-  margin-top: 60px;
+  padding-top: 60px;
+  cursor: pointer;
+}
+
+
+h1#title:hover {
+  text-decoration: underline;
 }
 
 .footer{
   width: 200px;
+  margin: 0 auto;
   margin-top: 50px;
   border-top: 1px solid black;
 }
@@ -236,6 +236,11 @@ h1{
 .footer a{
   font-size: 16px;
   color: black;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  text-decoration: underline;
 }
 
 #status {
@@ -260,4 +265,8 @@ ul#loglines{
   list-style-type: none;
   color: 888;
   font-size: 12px;
+}
+
+#titlediv{
+  margin-left: 50px;
 }
