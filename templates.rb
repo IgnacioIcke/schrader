@@ -85,9 +85,9 @@ TemplateDiff = %{
         }
         function whitelist(){
             $.ajax({
-                url: '/whitelist?user=<%= @user %>'
+                url: '/whitelist?user=<%= @user %>',
+                success: function(){next();}
             }); 
-            next();
         }
         function block(){
             window.open('<%= @site %>/wiki/Special:Block/<%= @user %>');
