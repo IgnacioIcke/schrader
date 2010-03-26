@@ -56,5 +56,3 @@ TemplateDiff = %{
     <%= @htmldiff %></table>
     <center>
 }
-
-

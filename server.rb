@@ -55,7 +55,9 @@ class Webserver
     # Calls the controller ShowDiffController and sends the html to the client
     def showDiff 
         rc = @rcs.find_one()
-        puts rc.inspect()
+        if !rc
+            return ''
+        end
         if rc['diff'] =~ /diff=(\d+)&oldid=(\d+)/
             previd  = $1
             curid = $2
