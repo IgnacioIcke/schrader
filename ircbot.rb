@@ -17,14 +17,15 @@ class Ircbot < IRC
     # [_port_] Port of the server
     # [_nick_] Nick of our bot
     # [_channel_] Channel to connect the bot to
-    def initialize(server, port, nick, channel, user)
+    # [_api_] Mediawiki api
+    def initialize(server, port, nick, channel, user, api)
         @server = server
         @port = port
         @nick = nick
         @channel = channel
         @db = Database.new()
-        @db.reset() 
-        @rcs = @db.getCollection();
+        @db.resetRc() 
+        @api = api
     end
 
     # Filters messages sent by _rc_ the recent changes bot and sents them to
@@ -48,12 +49,15 @@ class Ircbot < IRC
             user    = $4
             bytes   = $5
             summary = $6
-            doc = {'page' => $1, 'flags' => $1, 'diff' => $3, 
-                   'user' => $4, 'bytes' => $5, 'summary' => $6,
-                   'created_at' => Time.new.to_i
-                    }
 
-            @rcs.insert(doc)
+            if diff =~ /diff=(\d+)&oldid=(\d+)/
+                previd  = $1
+                curid = $2
+            end
+
+            htmldiff = @api.getDiff(page, previd, curid)
+
+            @db.insertRc($1, $2, $3, $4, $5, $6, htmldiff)
         end
     end
 end

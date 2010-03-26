@@ -13,7 +13,6 @@ class Webserver
         @port = port
         @server = TCPServer.new('localhost', port)
         @db = Database.new()
-        @rcs = @db.getCollection()
         @api = api
         @site = site
         @isAdmin = true
@@ -54,18 +53,8 @@ class Webserver
 
     # Calls the controller ShowDiffController and sends the html to the client
     def showDiff 
-        rc = @rcs.find_one()
-        if !rc
-            return ''
-        end
-        if rc['diff'] =~ /diff=(\d+)&oldid=(\d+)/
-            previd  = $1
-            curid = $2
-        end
-        htmldiff = @api.getDiff(rc['page'],previd, curid)
-
-        controller = ShowDiffController.new(@site, @isAdmin, rc['diff'], htmldiff, rc['page'], rc['user'])
-        @rcs.remove({'diff' => rc['diff']})
+        rc = @db.retrieveRc
+        controller = ShowDiffController.new(@site, @isAdmin, rc[:diff], rc[:htmldiff], rc[:page], rc[:user])
         return controller.generateHtml
     end
 end

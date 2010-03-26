@@ -1,22 +1,54 @@
 require 'rubygems'
-require 'mongo'
+require 'sequel'
 
-# Class to work with a mongo database
-
-class Database  
-    #connect to the DB
+class Database
+    # connect with DB
     def initialize
-        db = Mongo::Connection.new("localhost", 27017).db("schrader")
-        @rcs = db.collection("Rc")
-        @rcs.create_index("created_at")
+        @db = Sequel.sqlite 'schrader.db' 
+        createRcTable
     end
-    #Get the collection of RCs
-    def getCollection
-        return @rcs
+    
+    # create an rcs table if it doesn't exist
+    def createRcTable
+        @db.create_table? :rcs do
+            primary_key :id
+            String :page
+            String :flags
+            String :diff
+            String :htmldiff
+            String :user
+            Integer :bytes
+            Fixnum :summary
+            DateTime :created_at
+            TrueClass :reviewed
+        end
+        @rcs = @db[:rcs]
     end
-    #Reset the DB
-    def reset
-        connection = Mongo::Connection.new # (optional host/port args)
-        connection.drop_database('schrader')
+    # Drops the Rc table and creates it again
+    def resetRc
+        @db.drop_table(:rcs)
+        createRcTable
+    end
+
+    # inserts an RC
+    def insertRc(page, flags, diff, user, bytes, summary, htmldiff)
+        @rcs.insert(:page => page, 
+                    :flags => flags, 
+                    :diff => diff, 
+                    :user => user, 
+                    :bytes => bytes, 
+                    :created_at => Time.new.to_i,
+                    :reviewed => false,
+                    :htmldiff => htmldiff
+                   )
+    end
+
+    # Retrieves the first unreviewe rc
+    def retrieveRc
+        return @rcs.first
+    end
+    # returns the number of Rcs
+    def countRcs
+        return @rcs.count
     end
 end

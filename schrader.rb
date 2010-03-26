@@ -25,12 +25,12 @@ Configuration = YAML::load(File.open("config.yml"))
 # Load private user configuration (user, *password*)
 Userconf      = YAML::load(File.open("userconfig.yml"))
 
-# Run the irc bot
-bot = Ircbot.new(Configuration['server'], Configuration['port'], Configuration['nick']+randomString(5), Configuration['channel'], Configuration['user'])
-Thread.new() { bot.run()}
-
 # Register into Mediawiki
 api = Mediawiki.new(Userconf['user'], Userconf['password'], Configuration['api'])
+
+# Run the irc bot
+bot = Ircbot.new(Configuration['server'], Configuration['port'], Configuration['nick']+randomString(5), Configuration['channel'], Configuration['user'], api)
+Thread.new() { bot.run()}
 
 # Set the webserver up
 port = (ARGV[0] || 3000).to_i

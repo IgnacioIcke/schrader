@@ -7,8 +7,7 @@ Schrader is a tool for patrolling MediaWiki projects
 You need 
 * ruby 1.8
 * rbmediawiki gem (gem install rbmediawiki)
-* An instance of mongoDB running
-* mongo gem (gem install mongo)
+* sqlite3 (gem install sqlite3-ruby) Don't install sqlite3, install sqlite3-ruby instead (http://stackoverflow.com/questions/1797199/uninitialized-constant-encoding-with-sqlite3-ruby-on-windows)
 
 == Usage
 

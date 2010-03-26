@@ -1,6 +1,7 @@
 # Contains templates for the actions
 
 require "erb"
+require 'rubygems'
 require 'r18n-desktop'
 
 R18n.from_env 'i18n/'
