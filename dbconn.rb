@@ -7,6 +7,7 @@ class Database
         @db = Sequel.sqlite 'schrader.db' 
         createRcTable
         createWLTable
+        createLogTable
     end
     
     # create a Whitelist Table if it doesn't exist
@@ -17,6 +18,17 @@ class Database
         end
         @wl = @db[:wl]
     end
+
+    # create a Logger Table if it doesn't exist
+    def createLogTable
+        @db.create_table? :log do
+            primary_key :id
+            String :message
+            DateTime :created_at
+        end
+        @log = @db[:log]
+    end
+
     # create an rcs table if it doesn't exist
     def createRcTable
         @db.create_table? :rcs do
@@ -39,6 +51,12 @@ class Database
         createRcTable
     end
 
+    # Drops the Rc table and creates it again
+    def resetLog
+        @db.drop_table(:log)
+        createLogTable
+    end
+
     # inserts an RC
     def insertRc(page, flags, diff, user, bytes, summary, htmldiff)
         if @wl.filter(:user => user).first
@@ -55,6 +73,17 @@ class Database
                     :reviewed => reviewed,
                     :htmldiff => htmldiff
                    )
+    end
+
+    # Adds a message to the log
+    def insertLog(message)
+        @log.insert(:message => message,
+                    :created_at => Time.new.to_i)
+    end
+
+    # Retrieve last log entries
+    def retrieveLog(num)
+        return @log.reverse_order(:created_at).limit(num)
     end
     
     # Adds an user to the Whitelist

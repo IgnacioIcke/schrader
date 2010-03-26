@@ -142,7 +142,7 @@ span.diff-html-changed:hover span.tip {
 
 /*Icons*/
 .buttons{
-  clear:both;
+  float:left;
   margin: 0 auto;
   width: 300px;
 }
@@ -222,7 +222,8 @@ body{
 
 h1{
   clear: both;
-  font-size: 48;
+  font-size: 36;
+  color: #777;
   margin-top: 60px;
 }
 
@@ -238,11 +239,25 @@ h1{
 }
 
 #status {
-  font-size: 24px;
+  font-size: 21px;
   color: #aaa;
 }
 
 #rcCount {
-  font-size: 36px;
+  font-size: 24px;
   color: black;
+}
+
+#log {
+  float: right;
+}
+
+img {
+  border: none;
+}
+
+ul#loglines{
+  list-style-type: none;
+  color: 888;
+  font-size: 12px;
 }

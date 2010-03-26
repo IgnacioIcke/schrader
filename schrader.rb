@@ -28,6 +28,10 @@ Userconf      = YAML::load(File.open("userconfig.yml"))
 # Register into Mediawiki
 api = Mediawiki.new(Userconf['user'], Userconf['password'], Configuration['api'])
 
+@db = Database.new()
+@db.resetRc
+@db.resetLog
+
 # Run the irc bot
 bot = Ircbot.new(Configuration['server'], Configuration['port'], Configuration['nick']+randomString(5), Configuration['channel'], Configuration['user'], api)
 Thread.new() { bot.run()}

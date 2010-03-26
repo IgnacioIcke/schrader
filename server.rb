@@ -29,20 +29,35 @@ class Webserver
                  session.print showDiff
              when /^\/rollback\?user=(.*)&page=(.*)$/
                  session.print "HTTP/1.1 200/OK\r\nContent-type: text/html\r\n\r\n"
-                 @api.rollback(CGI::unescape($1), CGI::unescape($2))
-             when /^\/rcCount$/
-                 session.print @db.countRcs
+                 user = CGI::unescape($1)
+                 page = CGI::unescape($2)
+                 rolled = @api.rollback(user, page)
+                 if rolled 
+                     @db.insertLog("Rollback #{user} on #{page}")
+                 else
+                     @db.insertLog("Someone reverted first at #{page}!")
+                 end
+             when /^\/log$/
+                 controller = ShowLogController.new(@db.countRcs, @db.retrieveLog(5))
+                 session.print controller.generateRawHtml
 
              when /^\/whitelist\?user=(.*)$/
-                 @db.addWL(CGI::unescape($1))
+                 user = CGI::unescape($1)
+                 @db.addWL(user)
+                 @db.insertLog("#{user} added to whitelist")
                  session.print "added to whitelist"
 
              when /^\/main\.css$/
+                 session.print "HTTP/1.1 200/OK\r\nContent-type: text/css\r\n\r\n"
                  file = File.open('webstuff/main.css')
                  session.print file.read
                  file.close
              when /^\/icons-simple\.png$/
                  file = File.open('webstuff/icons/icons-simple.png', 'rb')
+                 session.write file.read
+                 file.close
+             when /^\/favicon\.ico$/
+                 file = File.open('webstuff/favicon.ico', 'rb')
                  session.write file.read
                  file.close
              else
@@ -74,10 +89,10 @@ class Webserver
     def showDiff 
         rc = @db.retrieveRc
         if !rc
-            return t.nodiffs
+            return ShowLogController.new(@db.countRcs, @db.retrieveLog(5)).generateHtml
         end
         @db.reviewedRc(rc[:id])
-        controller = ShowDiffController.new(@site, @isAdmin, rc[:diff], rc[:htmldiff], rc[:page], rc[:user], @db.countRcs)
+        controller = ShowDiffController.new(@site, @isAdmin, rc[:diff], rc[:htmldiff], rc[:page], rc[:user], @db.countRcs, @db.retrieveLog(5))
         return controller.generateHtml
     end
 end

@@ -27,7 +27,7 @@ class Mediawiki
     def rollback(user, page)
         result = @api.query_prop_revisions(page, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "rollback" )
         token = result['query']['pages']['page']['revisions']['rev']['rollbacktoken']
-        result = @api.rollback(page, user, token, t.rollback + "[[special:contributions/#{user}|#{user}]]")
+        result = @api.rollback(page, user, token, t.rollback + " [[special:contributions/#{user}|#{user}]]")
         if result.key? 'error'
             return false
         else 

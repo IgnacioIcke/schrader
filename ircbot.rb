@@ -24,7 +24,6 @@ class Ircbot < IRC
         @nick = nick
         @channel = channel
         @db = Database.new()
-        @db.resetRc() 
         @api = api
     end
 

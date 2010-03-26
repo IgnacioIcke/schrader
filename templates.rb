@@ -10,6 +10,7 @@ include R18n::Helpers
 TemplateHeader = %{
     <html><head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="stylesheet" href="/main.css" type="text/css" media="screen" />
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.min.js"></script>
 
@@ -17,7 +18,7 @@ TemplateHeader = %{
 
 TemplateFooter = %{
     <div class="footer">
-    <a href="http://github.com/IgnacioIcke/schrader">Schrader</a>
+    <a href="http://github.com/IgnacioIcke/schrader"><img src="favicon.ico" />chrader</a>
     </div>
     </body></html>
 }
@@ -26,10 +27,6 @@ TemplateDiff = %{
     <script type="text/javascript">
         $(document).ready(function()
         {
-            var refreshId = setInterval(function()
-            {
-                $('#rcCount').load('/rcCount');
-            }, 1000);
             $(document).keydown(function(event) {
                 switch (event.keyCode) {
                     case 32:
@@ -114,7 +111,7 @@ TemplateDiff = %{
             window.open('<%= @site %>/w/index.php?title=User_Talk:<%= @user %>&action=edit&section=new');
         }
     </script>
-    <div id="status"><%= t.unreviewed + " " %><span id="rcCount"><%= @numdiffs.to_s %></span></div>
+    <%= ShowLogController.new(@numdiffs, @log).generateRawHtml %>
     <div class="buttons">
     <button class="icon icon-next" onClick="next()" title="<%= t.next %> (space)"></button>
     <button class="icon icon-revert" onClick="rollback()" title="<%= t.rollback %> (x)"></button>
@@ -133,7 +130,7 @@ TemplateDiff = %{
     </div>
     <center>
     <h1><%= @page %></h1>
-    <span class="centered"><a href="<%= @site %>/wiki/User:<%= @user %>"><%= @user %></a> (<a href="<%= @site %>/wiki/User_Talk:<%= @user %>"><%= t.talk %></a>|<a href="<%= @site %>/wiki/Special:Contributions/<%= @user %>"><%= t.contributions %></a>) </div>
+    <span class="centered"><a href="<%= @site %>/wiki/User:<%= @user %>"><%= @user %></a> (<a href="<%= @site %>/wiki/User_Talk:<%= @user %>"><%= t.talk %></a>|<a href="<%= @site %>/wiki/Special:Contributions/<%= @user %>"><%= t.contributions %></a>) </span>
     <table class="diff">
     <col class="diff-marker"/>
     <col class="diff-content"/>
@@ -141,4 +138,27 @@ TemplateDiff = %{
     <col class="diff-content"/>
     <%= @htmldiff %></table>
     <center>
+}
+
+#Shows the log and the number of unreviewed RCs
+TemplateLog = %{
+    <script type="text/javascript">
+        $(document).ready(function()
+        {
+            var refreshId = setInterval(function()
+            {
+                $('#log').load('/log');
+            }, 3000);
+        });
+    </script>
+    <div id="log">
+    <div id ="status"><%= t.unreviewed %><span id="rcCount"><%= @numdiffs.to_s %></span></div>
+    <ul id ="loglines">
+        <% if @log %>
+            <% @log.each do |logline|%>
+                <li><%= logline[:message] %></li>
+            <% end %>
+        <% end %>
+    </ul>
+    </div>
 }
