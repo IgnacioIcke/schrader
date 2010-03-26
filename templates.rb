@@ -30,29 +30,106 @@ TemplateDiff = %{
             {
                 $('#rcCount').load('/rcCount');
             }, 1000);
+            $(document).keydown(function(event) {
+                switch (event.keyCode) {
+                    case 32:
+                        next();
+                    break;
+                    case 88:
+                        rollback();
+                    break;
+                    case 87:
+                        warn();
+                    break;
+                    case 65:
+                        revertAndWarn();
+                    break;
+                    case 76:
+                        whitelist();
+                    break;
+                    case 66:
+                        block();
+                    break;
+                    case 68:
+                        deleteArt();
+                    break;
+                    case 86:
+                        view();
+                    break;
+                    case 69:
+                        edit();
+                    break;
+                    case 85:
+                        userpage();
+                    break;
+                    case 84:
+                        talk();
+                    break;
+                    case 77:
+                        newMessage();
+                    break;
+                }
+                return false;
+            });
         });
+        function next(){
+            location.href = '/';
+        }
         function rollback(){
             $.ajax({
                 url: '/rollback?user=<%= @user %>&page=<%= @page %>'
             }); 
         }
+        function warn(){
+        }
+        function revertAndWarn(){
+            rollback();
+            warn();
+        }
+        function whitelist(){
+            $.ajax({
+                url: '/whitelist?user=<%= @user %>'
+            }); 
+            next();
+        }
+        function block(){
+            window.open('<%= @site %>/wiki/Special:Block/<%= @user %>');
+        }
+        function deleteArt(){
+            window.open('<%= @site %>/w/index.php?title=<%= @page %>&action=delete');
+        }
+        function view(){
+            window.open('<%= @site %>/wiki/<%= @page %>'); 
+        }
+        function edit(){
+            window.open('<%= @site %>/w/index.php?title=<%= @page %>&action=edit');
+        }
+        function userPage(){
+            window.open('<%= @site %>/wiki/User:<%= @user %>');
+        }
+        function talk(){
+            window.open('<%= @site %>/wiki/User Talk:<%= @user %>');
+        }
+        function newMessage(){
+            window.open('<%= @site %>/w/index.php?title=User_Talk:<%= @user %>&action=edit&section=new');
+        }
     </script>
-    <div id="rcCount"><%= @numdiffs %></div>
+    <div id="status"><%= t.unreviewed + " " %><span id="rcCount"><%= @numdiffs.to_s %></span></div>
     <div class="buttons">
-    <button class="icon icon-next" onClick="location.href = '/'" title="<%= t.next %>"></button>
-    <button class="icon icon-revert" onClick="rollback()" title="<%= t.rollback %>"></button>
-    <button class="icon icon-revertwarn" onClick="rollbackwarn()" title="<%= t.rollbackandwarn %>"></button>
-    <button class="icon icon-warn" onClick="window.open('<%= @site %>/wiki/Special:Block/<%= @user %>')" title="<%= t.warn %>" ></button>
-    <button class="icon icon-block" onClick="window.open('<%= @site %>/wiki/Special:Block/<%= @user %>')" title="<%= t.block %>"></button>
-    <button class="icon icon-delete" onClick="window.open('<%= @site %>/w/index.php?title=<%= @page %>&action=delete')" title="<%= t.delete %>"></button>
+    <button class="icon icon-next" onClick="next()" title="<%= t.next %> (space)"></button>
+    <button class="icon icon-revert" onClick="rollback()" title="<%= t.rollback %> (x)"></button>
+    <button class="icon icon-revertwarn" onClick="revertAndWarn()" title="<%= t.rollbackandwarn %> (a)"></button>
+    <button class="icon icon-warn" onClick="warn()" title="<%= t.warn %> (w)" ></button>
+    <button class="icon icon-block" onClick="block()" title="<%= t.block %> (b)"></button>
+    <button class="icon icon-delete" onClick="deleteArt()" title="<%= t.delete %> (d)"></button>
     </div>
     <div class="buttons">
-    <button class="icon icon-whitelist" onClick="location.href = '/'"></button>
-    <button class="icon icon-view" onClick="window.open('<%= @site %>/wiki/<%= @page %>')" title="<%= t.viewpage %>"></button>
-    <button class="icon icon-edit" onClick="window.open('<%= @site %>/w/index.php?title=<%= @page %>&action=edit')" title="<%= t.edit %>" ></button>
-    <button class="icon icon-user" onClick="window.open('<%= @site %>/wiki/User:<%= @user %>')" title="<%= t.userpage %>"></button>
-    <button class="icon icon-talk" onClick="window.open('<%= @site %>/wiki/User Talk:<%= @user %>')" title="<%= t.usertalk %>"></button>
-    <button class="icon icon-newmsg" onClick="window.open('<%= @site %>/w/index.php?title=User_Talk:<%= @user %>&action=edit&section=new')" title="<%= t.newmessage %>"></button>
+    <button class="icon icon-whitelist" onClick="whitelist()" title="<%= t.whitelist %> (l)"></button>
+    <button class="icon icon-view" onClick="view()" title="<%= t.viewpage %> (v)"></button>
+    <button class="icon icon-edit" onClick="edit()" title="<%= t.edit %> (e)" ></button>
+    <button class="icon icon-user" onClick="userPage()" title="<%= t.userpage %> (u)"></button>
+    <button class="icon icon-talk" onClick="talk()" title="<%= t.usertalk %> (t)"></button>
+    <button class="icon icon-newmsg" onClick="newMessage()" title="<%= t.newmessage %> (n)"></button>
     </div>
     <center>
     <h1><%= @page %></h1>

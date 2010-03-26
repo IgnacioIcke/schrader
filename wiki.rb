@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'rbmediawiki'
+require 'erb'
 
 # This class is a wrapper of rbmediawiki
 
@@ -25,10 +26,12 @@ class Mediawiki
     # [_page_] Page in which we do the rollback
     def rollback(user, page)
         result = @api.query_prop_revisions(page, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "rollback" )
-        puts result
         token = result['query']['pages']['page']['revisions']['rev']['rollbacktoken']
-        puts token
-        result = @api.rollback(page, user, token, "rollback  #{user}")
-        puts result
+        result = @api.rollback(page, user, token, t.rollback + "[[special:contributions/#{user}|#{user}]]")
+        if result.key? 'error'
+            return false
+        else 
+            return true
+        end
     end
 end

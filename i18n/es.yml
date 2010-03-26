@@ -11,3 +11,6 @@ usertalk: Discusión
 newmessage: Nuevo mensaje
 talk: Discusión
 contributions: Contribuciones
+whitelist: Añadir usuario a lista blanca
+nodiffs: No hay cambios recientes sin revisar. Recarga en algunos segundos.
+unreviewed: "RCs sin revisar: "

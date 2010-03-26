@@ -11,3 +11,6 @@ usertalk: User Talk
 newmessage: New Message
 talk: Talk
 contributions: Contributions
+whitelist: Add user to Whitelist
+nodiffs: There are not unreviewed Recent Changes. Reload in a few seconds
+unreviewed: "Unreviewed Rcs: "

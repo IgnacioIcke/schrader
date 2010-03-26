@@ -2,6 +2,7 @@ require 'socket'
 require 'dbconn'
 require 'controller'
 require 'cgi'
+require 'erb'
 
 # Class that represents a simple web server
 class Webserver
@@ -28,9 +29,13 @@ class Webserver
                  session.print showDiff
              when /^\/rollback\?user=(.*)&page=(.*)$/
                  session.print "HTTP/1.1 200/OK\r\nContent-type: text/html\r\n\r\n"
-                 session.print @api.rollback(CGI::unescape($1), CGI::unescape($2))
+                 @api.rollback(CGI::unescape($1), CGI::unescape($2))
              when /^\/rcCount$/
                  session.print @db.countRcs
+
+             when /^\/whitelist\?user=(.*)$/
+                 @db.addWL(CGI::unescape($1))
+                 session.print "added to whitelist"
 
              when /^\/main\.css$/
                  file = File.open('webstuff/main.css')
@@ -60,7 +65,6 @@ class Webserver
                 rescue Exception => detail
                     puts detail.message()
                     print detail.backtrace.join("\n")
-                    retry
                 end
             }
         end
@@ -69,6 +73,9 @@ class Webserver
     # Calls the controller ShowDiffController and sends the html to the client
     def showDiff 
         rc = @db.retrieveRc
+        if !rc
+            return t.nodiffs
+        end
         @db.reviewedRc(rc[:id])
         controller = ShowDiffController.new(@site, @isAdmin, rc[:diff], rc[:htmldiff], rc[:page], rc[:user], @db.countRcs)
         return controller.generateHtml
