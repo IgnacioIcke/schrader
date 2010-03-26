@@ -53,11 +53,14 @@ class Ircbot < IRC
             if diff =~ /diff=(\d+)&oldid=(\d+)/
                 previd  = $1
                 curid = $2
+
+                Thread.new() {
+                    htmldiff = @api.getDiff(page, previd, curid)
+
+                    @db.insertRc(page, flags, diff, user, bytes, summary, htmldiff)
+                }
             end
 
-            htmldiff = @api.getDiff(page, previd, curid)
-
-            @db.insertRc($1, $2, $3, $4, $5, $6, htmldiff)
         end
     end
 end

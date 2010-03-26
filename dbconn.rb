@@ -38,14 +38,19 @@ class Database
                     :user => user, 
                     :bytes => bytes, 
                     :created_at => Time.new.to_i,
-                    :reviewed => false,
+                    :reviewed => 0,
                     :htmldiff => htmldiff
                    )
     end
 
     # Retrieves the first unreviewe rc
     def retrieveRc
-        return @rcs.first
+        rc = @rcs.filter(:reviewed => 0).order(:created_at).first
+        rc.update(:reviewed => 1)
+        return rc
+    end
+    def reviewedRc(id)
+        @rcs.filter(:id => id).update(:reviewed => true)
     end
     # returns the number of Rcs
     def countRcs

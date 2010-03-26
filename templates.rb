@@ -1,4 +1,4 @@
-# Contains templates for the actions
+#Contains templates for the actions
 
 require "erb"
 require 'rubygems'
@@ -24,12 +24,20 @@ TemplateFooter = %{
 
 TemplateDiff = %{
     <script type="text/javascript">
+        $(document).ready(function()
+        {
+            var refreshId = setInterval(function()
+            {
+                $('#rcCount').load('/rcCount');
+            }, 1000);
+        });
         function rollback(){
             $.ajax({
                 url: '/rollback?user=<%= @user %>&page=<%= @page %>'
             }); 
         }
     </script>
+    <div id="rcCount"><%= @numdiffs %></div>
     <div class="buttons">
     <button class="icon icon-next" onClick="location.href = '/'" title="<%= t.next %>"></button>
     <button class="icon icon-revert" onClick="rollback()" title="<%= t.rollback %>"></button>

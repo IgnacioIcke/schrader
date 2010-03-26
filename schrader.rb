@@ -35,9 +35,5 @@ Thread.new() { bot.run()}
 # Set the webserver up
 port = (ARGV[0] || 3000).to_i
 webserver = Webserver.new(port, api, Configuration['site'], Userconf['admin'])
-Thread.new() {webserver.run() }
-
-# Dirty infinite loop
-while 1
-end
+webserver.run() 
 
