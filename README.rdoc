@@ -14,7 +14,6 @@ You need
 First, edit config.yml and create userconfig.yml 
 
 * config.yml holds general configuration. Here, user refers to the user in the IRC. You can leave it as "schrader", it is not important. Just be sure that you edit the info regarding your project: channel, site and api.
-  =begin config
     nick:     schrader
     channel:  "#es.wikipedia"
     server:   browne.wikimedia.org
@@ -22,14 +21,11 @@ First, edit config.yml and create userconfig.yml
     user:     schrader
     site:     "http://es.wikipedia.org"
     api:      "http://es.wikipedia.org/w/api.php"
-  =end
 
 * userconfig.yml holds configuration critical for the user. This file should now be readable by other people, so make sure you give it appropiate permission.
-  =begin uerconfig
     user:     Your wiki user
     password: Your password
     admin:    true or false (depending on whether you are admin or not)
-  =end
 
 Now you can run:
 
