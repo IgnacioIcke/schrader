@@ -29,7 +29,7 @@ First, edit config.yml and create userconfig.yml
 
 Now you can run:
 
-ruby schrader.rb
+    ruby schrader.rb
 
 and point your browser to http://localhost:3000
 
