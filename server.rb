@@ -99,7 +99,7 @@ class Webserver
             return ShowLogController.new(@db.countRcs, @db.retrieveLog(5)).generateHtml
         end
         @db.reviewedRc(rc[:id])
-        controller = ShowDiffController.new(@site, @isAdmin, rc[:diff], rc[:htmldiff], rc[:page], rc[:user], @db.countRcs, @db.retrieveLog(5))
+        controller = ShowDiffController.new(@site, @isAdmin, rc[:diff], rc[:htmldiff], rc[:page], rc[:user], rc[:summary], @db.countRcs, @db.retrieveLog(5))
         return controller.generateHtml
     end
 end

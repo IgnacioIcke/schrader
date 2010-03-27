@@ -19,7 +19,8 @@ class Mediawiki
     # [_curid_] current id of the diff
     def getDiff(page, previd, curid)
         result = @api.query_prop_revisions(page, nil, 1, curid, nil,nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, previd)
-        return result['query']['pages']['page']['revisions']['rev']['diff']['content']
+        htmldiff = result['query']['pages']['page']['revisions']['rev']['diff']['content']
+        return htmldiff
     end
     # Rollback in a page
     # [_user_] User to revert

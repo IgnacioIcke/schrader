@@ -39,7 +39,7 @@ class Database
             String :htmldiff
             String :user
             Integer :bytes
-            Fixnum :summary
+            String :summary
             DateTime :created_at
             TrueClass :reviewed
         end
@@ -74,6 +74,7 @@ class Database
                     :diff => diff, 
                     :user => user, 
                     :bytes => bytes, 
+                    :summary => summary,
                     :created_at => Time.new.to_i,
                     :reviewed => reviewed,
                     :htmldiff => htmldiff

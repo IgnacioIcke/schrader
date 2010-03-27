@@ -33,7 +33,7 @@ class ShowDiffController < Controller
     # [_htmldiff_] Table with the diff displayed
     # [_page_] Page the to what the diff is a change of
     # [_user_] User who edited the page
-    def initialize(site, isAdmin, difflink, htmldiff, page, user, numdiffs, log)
+    def initialize(site, isAdmin, difflink, htmldiff, page, user, summary, numdiffs, log)
         @difflink = difflink
         @htmldiff = htmldiff
         @page     = page
@@ -43,6 +43,7 @@ class ShowDiffController < Controller
         @isAdmin  = isAdmin
         @numdiffs = numdiffs
         @log      = log
+        @summary  = summary
     end
 end
 

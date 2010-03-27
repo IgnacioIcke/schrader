@@ -140,6 +140,7 @@ TemplateDiff = %{
     </div>
     <div id="titlediv">
         <h1 id="title" onClick="view()"><%= @page %></h1>
+        <div id="summary"><em><%= @summary %></em></div>
         <a href="<%= @site %>/wiki/User:<%= @user %>"><%= @user %></a> (<a href="<%= @site %>/wiki/User_Talk:<%= @user %>"><%= t.talk %></a>|<a href="<%= @site %>/wiki/Special:Contributions/<%= @user %>"><%= t.contributions %></a>)
     </div>
     <center>
