@@ -12,11 +12,12 @@ newmessage: New Message
 talk: Talk
 contributions: Contributions
 whitelist: Add user to Whitelist
-nodiffs: There are not unreviewed Recent Changes. Reload in a few seconds
-unreviewed: "Unreviewed Rcs: "
+nodiffs: There are not Recent Changes to review. Reload in a few seconds
+unreviewed: "Rcs to review: "
 revertedFirst: "Someone reverted first on "
 rollbacked: "Reverted "
 "on": on
 whiteisted: " added to the whitelist"
 noRcs: "There are not unreviewed diffs"
 wait: "Wait for it..."
+clean: Clean Queue
