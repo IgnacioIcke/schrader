@@ -27,6 +27,10 @@ TemplateDiff = %{
     <script type="text/javascript">
         $(document).ready(function()
         {
+            var refreshId = setInterval(function()
+            {
+                $('#log').load('/log');
+            }, 3000);
             $(document).keydown(function(event) {
                 switch (event.keyCode) {
                     case 32:
@@ -117,7 +121,9 @@ TemplateDiff = %{
             next();
         }
     </script>
+    <div id="log">
     <%= ShowLogSnippetController.new(@numdiffs, @log).generateRawHtml %>
+    </div>
     <div class="buttons">
     <button class="icon icon-next" onClick="next()" title="<%= t.next %> (space)"></button>
     <button class="icon icon-revert" onClick="rollback()" title="<%= t.rollback %> (x)"></button>
@@ -149,11 +155,23 @@ TemplateDiff = %{
 #When there are no rcs
 TemplateLog = %{
     <script type="text/javascript">
-    function cleanRc(){
-        return true;
-    }
+        function cleanRc(){
+            return true;
+        }
+        $(document).ready(function()
+        {
+            var refreshId = setInterval(function()
+            {
+                $('#log').load('/log');
+                if ($('#rcCount').text != 0){
+                    location.href = '/';
+                }
+            }, 3000);
+        });
     </script>
+    <div id="log">
     <%= ShowLogSnippetController.new(@numdiffs, @log).generateRawHtml %>
+    </div>
     <div id="titlediv">
     <h1 id="title"><%= t.noRcs %></h1>
     <p><%= t.wait %></p>
@@ -164,21 +182,6 @@ TemplateLog = %{
 
 #Shows the log and the number of unreviewed RCs
 TemplateLogSnippet = %{
-    <script type="text/javascript">
-        $(document).ready(function()
-        {
-            var refreshId = setInterval(function()
-            {
-                $('#log').load('/log');
-                if ($('#waiting').size()){
-                    if ($('#rcCount').text != 0){
-                        location.href = '/';
-                    }
-                }
-            }, 3000);
-        });
-    </script>
-    <div id="log">
     <div id ="status"><%= t.unreviewed %><span id="rcCount"><%= @numdiffs.to_s %></span><img src="removerc.png" onclick="cleanRc()" title="<%= t.clean %>"/></div>
     <ul id ="loglines">
         <% if @log %>
@@ -187,5 +190,4 @@ TemplateLogSnippet = %{
             <% end %>
         <% end %>
     </ul>
-    </div>
 }

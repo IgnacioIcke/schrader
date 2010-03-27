@@ -38,6 +38,7 @@ class Webserver
                      @db.insertLog(t.revertedFirst + page)
                  end
              when /^\/log$/
+                 session.print "HTTP/1.1 200/OK\r\nContent-type: text/html\r\n\r\n"
                  controller = ShowLogSnippetController.new(@db.countRcs, @db.retrieveLog(5))
                  session.print controller.generateRawHtml
 
