@@ -5,9 +5,13 @@ Schrader is a tool for patrolling MediaWiki projects
 == Requeriments
 
 You need 
-* ruby 1.8
+* ruby 1.8 and rubygems1.8 (sudo apt-get install ruby1.8 rubygems1.8)
 * rbmediawiki gem (gem install rbmediawiki)
-* sqlite3 (gem install sqlite3-ruby) Don't install sqlite3, install sqlite3-ruby instead (http://stackoverflow.com/questions/1797199/uninitialized-constant-encoding-with-sqlite3-ruby-on-windows)
+* sqlite3 with headers ("sudo apt-get install libsqlite3-dev" on ubuntu)
+* sqlite3-ruby (gem install sqlite3-ruby) Don't install sqlite3, install sqlite3-ruby instead (http://stackoverflow.com/questions/1797199/uninitialized-constant-encoding-with-sqlite3-ruby-on-windows)
+to install sqlite3-ruby in Ubuntu you may need to install ruby1.8-dev (sudo apt-get install ruby1.8-dev) otherwise you may get a "No such file to load -- mkmf" error. 
+* sequel (gem install sequel)
+* r18n-desktop (gem install r18n-desktop)
 
 == Usage
 
