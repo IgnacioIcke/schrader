@@ -254,6 +254,7 @@ h1#title:hover {
 #rcCount {
   font-size: 24px;
   color: black;
+  margin-right: 10px;
 }
 
 #log {
@@ -266,6 +267,7 @@ img {
 
 ul#loglines{
   list-style-type: none;
+  padding-left: 0px;
   color: 888;
   font-size: 12px;
 }

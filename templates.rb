@@ -7,6 +7,12 @@ require 'r18n-desktop'
 R18n.from_env 'i18n/'
 include R18n::Helpers
 
+class String
+    def escapejs
+        self.gsub(/'/, "\\\\'")
+    end
+end
+
 TemplateHeader = %{
     <html><head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -78,7 +84,7 @@ TemplateDiff = %{
         }
         function rollback(){
             $.ajax({
-                url: '/rollback?user=<%= @user %>&page=<%= @page %>'
+                url: '/rollback?user=<%= @user.escapejs %>&page=<%= @page.escapejs %>'
             }); 
         }
         function warn(){
@@ -89,30 +95,30 @@ TemplateDiff = %{
         }
         function whitelist(){
             $.ajax({
-                url: '/whitelist?user=<%= @user %>',
+                url: '/whitelist?user=<%= @user.escapejs %>',
                 success: function(){next();}
             }); 
         }
         function block(){
-            window.open('<%= @site %>/wiki/Special:Block/<%= @user %>');
+            window.open('<%= @site %>/wiki/Special:Block/<%= @user.escapejs %>');
         }
         function deleteArt(){
-            window.open('<%= @site %>/w/index.php?title=<%= @page %>&action=delete');
+            window.open('<%= @site %>/w/index.php?title=<%= @page.escapejs %>&action=delete');
         }
         function view(){
-            window.open('<%= @site %>/wiki/<%= @page %>'); 
+            window.open('<%= @site %>/wiki/<%= @page.escapejs %>'); 
         }
         function edit(){
-            window.open('<%= @site %>/w/index.php?title=<%= @page %>&action=edit');
+            window.open('<%= @site %>/w/index.php?title=<%= @page.escapejs %>&action=edit');
         }
         function userPage(){
-            window.open('<%= @site %>/wiki/User:<%= @user %>');
+            window.open('<%= @site %>/wiki/User:<%= @user.escapejs %>');
         }
         function talk(){
-            window.open('<%= @site %>/wiki/User Talk:<%= @user %>');
+            window.open('<%= @site %>/wiki/User Talk:<%= @user.escapejs %>');
         }
         function newMessage(){
-            window.open('<%= @site %>/w/index.php?title=User_Talk:<%= @user %>&action=edit&section=new');
+            window.open('<%= @site %>/w/index.php?title=User_Talk:<%= @user.escapejs %>&action=edit&section=new');
         }
         function cleanRc(){
             $.ajax({
@@ -183,7 +189,7 @@ TemplateLog = %{
 
 #Shows the log and the number of unreviewed RCs
 TemplateLogSnippet = %{
-    <div id ="status"><%= t.unreviewed %><span id="rcCount"><%= @numdiffs.to_s %></span><img src="removerc.png" onclick="cleanRc()" title="<%= t.clean %>"/></div>
+    <div id ="status"><%= t.unreviewed %><span id="rcCount"><%= @numdiffs.to_s %></span><a href="#"><img src="removerc.png" onclick="cleanRc()" title="<%= t.clean %>"/></a></div>
     <ul id ="loglines">
         <% if @log %>
             <% @log.each do |logline|%>
