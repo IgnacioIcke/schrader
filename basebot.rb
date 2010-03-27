@@ -14,7 +14,7 @@ class IRC
 
     # Connects to the server
     def connect()
-        puts @server
+        #puts @server
         @irc = TCPSocket.open(@server, @port)
         send "USER schrader schrader schrader: schrader schrader"
         send "NICK #{@nick}"
@@ -28,16 +28,16 @@ class IRC
     def handle_server_input(what)
         case what.strip
             when /^PING :(.+)$/i
-                puts "[ Server ping ]"
+                #puts "[ Server ping ]"
                 send "PONG :#{$1}"
             when /^:(.+?)!(.+?)@(.+?)\sPRIVMSG\s.+\s:[\001]PING (.+)[\001]$/i
-                puts "[ CTCP PING from #{$1}!#{$2}@#{$3} ]"
+                #puts "[ CTCP PING from #{$1}!#{$2}@#{$3} ]"
                 send "NOTICE #{$1} :\001PING #{$4}\001"
             when /^:(.+?)!(.+?)@(.+?)\sPRIVMSG\s.+\s:[\001]VERSION[\001]$/i
-                puts "[ CTCP VERSION from #{$1}!#{$2}@#{$3} ]"
+                #puts "[ CTCP VERSION from #{$1}!#{$2}@#{$3} ]"
                 send "NOTICE #{$1} :\001VERSION Rodillitas\001"
             when /^:(.+?)!(.+?)@(.+?)\sPRIVMSG\s(.+)\s:EVAL (.+)$/i
-                puts "[ EVAL #{$5} from #{$1}!#{$2}@#{$3} ]"
+                #puts "[ EVAL #{$5} from #{$1}!#{$2}@#{$3} ]"
                 send "PRIVMSG #{(($4==@nick)?$1:$4)} :#{evaluate($5)}"
             when /^:(.+?)!(.+?)@(.+?)\sPRIVMSG\s#(.+)\s:(.+)$/i
                 on_pub_msg($5, $1, $4)
@@ -55,7 +55,7 @@ class IRC
     # [_where_] where was it said
 
     def on_pub_msg(what, who, where)
-        puts "#{who} says #{what} at #{where}"
+        #puts "#{who} says #{what} at #{where}"
     end
 
     # Start the stuff. Handles exceptions and calls main_loop()
@@ -65,7 +65,7 @@ class IRC
             main_loop()
         rescue Interrupt
         rescue Exception => detail
-            puts detail.message()
+            #puts detail.message()
             print detail.backtrace.join("\n")
             retry
         end

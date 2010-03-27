@@ -34,7 +34,7 @@ class Ircbot < IRC
     # [_who_] who said it
     # [_where_] where was it said
     def on_pub_msg(what, who, where)
-        if who == 'rc':
+        if who == 'rc'
             processRc(what)
         end
     end
