@@ -7,7 +7,8 @@ require "yaml"
 require "net/http"
 require 'dbconn'
 
-ReEdit = Regexp.new(/\x0314\[\[\x0307([^\]]*)\x0314\]\]\x034 (\w*)\x0310 \x0302(http:\/\/\S*)\x03 \x035\*\x03 \x0303([^\x03]+)\x03 \x035\*\x03 \(([^\)]*)\) \x0310(.*)\x03$/)
+ReEdit = Regexp.new(/\[\[(.*)\]\] +(.*) +([^\s]+) +\* +(.*?) +\* +\(.*?\) +(.*)$/)
+
 
 # This class is son of IRC, implements specific handlers for schrader
 
@@ -41,22 +42,24 @@ class Ircbot < IRC
 
     # Processes a Recent Change message (_what_) and stores it in the db.
     def processRc(what)
+        #colors and bold => shitty IRC stuff
+        what.gsub!(/\x03\d{0,2}/,'')
+        what.gsub!(/\x02\d{0,2}/,'')
         if what =~ ReEdit
             page    = $1
             flags   = $2
             diff    = $3
             user    = $4
-            bytes   = $5
-            summary = $6
+            summary = $5
 
-            if diff =~ /diff=(\d+)&oldid=(\d+)/
-                previd  = $1
-                curid = $2
+            if diff =~ /diff=(\d+)&oldid=(\d+)/ 
+                curid  = $1
+                previd = $2
 
                 Thread.new() {
-                    htmldiff = @api.getDiff(page, previd, curid)
+                    htmldiff = @api.getDiff(page, curid, previd)
 
-                    @db.insertRc(page, flags, diff, user, bytes, summary, htmldiff)
+                    @db.insertRc(page, flags, diff, user, summary, htmldiff)
                 }
             end
 

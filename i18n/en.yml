@@ -17,7 +17,7 @@ unreviewed: "Rcs to review: "
 revertedFirst: "Someone reverted first on "
 rollbacked: "Reverted last changes of "
 "on": on
-whiteisted: " added to the whitelist"
+whitelisted: " added to the whitelist"
 noRcs: "There are not unreviewed diffs"
 wait: "Wait for it..."
 clean: Clean Queue

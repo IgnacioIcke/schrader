@@ -38,7 +38,6 @@ class Database
             String :diff
             String :htmldiff
             String :user
-            Integer :bytes
             String :summary
             DateTime :created_at
             TrueClass :reviewed
@@ -63,7 +62,7 @@ class Database
     end
 
     # inserts an RC
-    def insertRc(page, flags, diff, user, bytes, summary, htmldiff)
+    def insertRc(page, flags, diff, user, summary, htmldiff)
         if @wl.filter(:user => user).first
             reviewed = 1
         else
@@ -73,7 +72,6 @@ class Database
                     :flags => flags, 
                     :diff => diff, 
                     :user => user, 
-                    :bytes => bytes, 
                     :summary => summary,
                     :created_at => Time.new.to_i,
                     :reviewed => reviewed,

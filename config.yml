@@ -1,8 +1,8 @@
 nick:     schrader
-channel:  "#es.wikipedia"
+channel:  "#en.wikipedia"
 server:   browne.wikimedia.org
 port:     6667
 user:     schrader
-site:     "http://es.wikipedia.org"
-api:      "http://es.wikipedia.org/w/api.php"
-
+site:     "http://en.wikipedia.org"
+api:      "http://en.wikipedia.org/w/api.php"
+language: en

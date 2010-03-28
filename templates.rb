@@ -4,7 +4,15 @@ require "erb"
 require 'rubygems'
 require 'r18n-desktop'
 
-R18n.from_env 'i18n/'
+Configuration = YAML::load(File.open("config.yml"))
+
+if Configuration.key? 'language' 
+    lang = Configuration['language']
+else
+    lang = 'en'
+end
+
+R18n.from_env 'i18n/', lang
 include R18n::Helpers
 
 class String
