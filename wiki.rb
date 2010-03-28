@@ -27,8 +27,9 @@ class Mediawiki
     # [_page_] Page in which we do the rollback
     def rollback(user, page)
         result = @api.query_prop_revisions(page, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "rollback" )
+        puts result
         token = result['query']['pages']['page']['revisions']['rev']['rollbacktoken']
-        result = @api.rollback(page, user, token, t.rollback + " [[special:contributions/#{user}|#{user}]] " +t.using+" [[:es:User:Ignacio Icke/Schrader|Schrader]]")
+        result = @api.rollback(page, user, token, t.rollbacked + "[[special:contributions/#{user}|#{user}]]" +t.using+"[[:es:User:Ignacio Icke/Schrader|Schrader]]")
         if result.key? 'error'
             return false
         else 

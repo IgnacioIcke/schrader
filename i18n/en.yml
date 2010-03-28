@@ -15,10 +15,10 @@ whitelist: Add user to Whitelist
 nodiffs: There are not Recent Changes to review. Reload in a few seconds
 unreviewed: "Rcs to review: "
 revertedFirst: "Someone reverted first on "
-rollbacked: "Reverted "
+rollbacked: "Reverted last changes of "
 "on": on
 whiteisted: " added to the whitelist"
 noRcs: "There are not unreviewed diffs"
 wait: "Wait for it..."
 clean: Clean Queue
-using: using
+using: " using "

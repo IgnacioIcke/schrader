@@ -15,10 +15,10 @@ whitelist: Añadir usuario a lista blanca
 nodiffs: No hay cambios recientes para revisar. Recarga en algunos segundos.
 unreviewed: "RCs para revisar: "
 revertedFirst: "Alguien revirtió antes en "
-rollbacked: "Revertido "
+rollbacked: "Revertidos los cambios de "
 "on": en
 whitelisted: " añadido a la lista blanca"
 noRcs: "No hay diffs sin revisar"
 wait: "Wait for it..."
 clean: Limpiar la cola
-using: usando
+using: " usando "
