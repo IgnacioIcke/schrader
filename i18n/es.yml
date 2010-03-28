@@ -21,3 +21,4 @@ whitelisted: " añadido a la lista blanca"
 noRcs: "No hay diffs sin revisar"
 wait: "Wait for it..."
 clean: Limpiar la cola
+using: usando

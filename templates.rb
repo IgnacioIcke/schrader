@@ -142,7 +142,7 @@ TemplateDiff = %{
     <button class="icon icon-edit" onClick="edit()" title="<%= t.edit %> (e)" ></button>
     <button class="icon icon-user" onClick="userPage()" title="<%= t.userpage %> (u)"></button>
     <button class="icon icon-talk" onClick="talk()" title="<%= t.usertalk %> (t)"></button>
-    <button class="icon icon-newmsg" onClick="newMessage()" title="<%= t.newmessage %> (n)"></button>
+    <button class="icon icon-newmsg" onClick="newMessage()" title="<%= t.newmessage %> (m)"></button>
     </div>
     <div id="titlediv">
         <h1 id="title" onClick="view()"><%= @page %></h1>
