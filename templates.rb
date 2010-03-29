@@ -32,7 +32,7 @@ TemplateHeader = %{
 
 TemplateFooter = %{
     <div class="footer">
-    <a href="http://github.com/IgnacioIcke/schrader"><img src="favicon.ico" />chrader</a>
+    <a href="http://github.com/IgnacioIcke/schrader" target='_blank'><img src="favicon.ico" />chrader</a>
     </div>
     </body></html>
 }
@@ -155,7 +155,7 @@ TemplateDiff = %{
     <div id="titlediv">
         <h1 id="title" onClick="view()"><%= @page %></h1>
         <div id="summary"><em><%= @summary %></em></div>
-        <a href="<%= @site %>/wiki/User:<%= @user %>"><%= @user %></a> (<a href="<%= @site %>/wiki/User_Talk:<%= @user %>"><%= t.talk %></a>|<a href="<%= @site %>/wiki/Special:Contributions/<%= @user %>"><%= t.contributions %></a>)
+        <a href="<%= @site %>/wiki/User:<%= @user %>" target='_blank'><%= @user %></a> (<a href="<%= @site %>/wiki/User_Talk:<%= @user %>" target='_blank'><%= t.talk %></a>|<a href="<%= @site %>/wiki/Special:Contributions/<%= @user %>" target='_blank'><%= t.contributions %></a>)
     </div>
     <center>
     <table class="diff">
