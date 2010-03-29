@@ -157,14 +157,20 @@ TemplateDiff = %{
         <div id="summary"><em><%= @summary %></em></div>
         <a href="<%= @site %>/wiki/User:<%= @user %>" target='_blank'><%= @user %></a> (<a href="<%= @site %>/wiki/User_Talk:<%= @user %>" target='_blank'><%= t.talk %></a>|<a href="<%= @site %>/wiki/Special:Contributions/<%= @user %>" target='_blank'><%= t.contributions %></a>)
     </div>
-    <center>
-    <table class="diff">
-    <col class="diff-marker"/>
-    <col class="diff-content"/>
-    <col class="diff-marker"/>
-    <col class="diff-content"/>
-    <%= @htmldiff %></table>
-    </center>
+    <% if @newpage %>
+        <div class="newpage">
+        <%= @htmldiff %>
+        </div>
+    <% else %>
+        <center>
+        <table class="diff">
+        <col class="diff-marker"/>
+        <col class="diff-content"/>
+        <col class="diff-marker"/>
+        <col class="diff-content"/>
+        <%= @htmldiff %></table>
+        </center>
+    <% end %>
 }
 
 #When there are no rcs

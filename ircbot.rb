@@ -9,7 +9,6 @@ require 'dbconn'
 
 ReEdit = Regexp.new(/\[\[(.*)\]\] +(.*) +([^\s]+) +\* +(.*?) +\* +\(.*?\) +(.*)$/)
 
-
 # This class is son of IRC, implements specific handlers for schrader
 
 class Ircbot < IRC
@@ -51,18 +50,26 @@ class Ircbot < IRC
             diff    = $3
             user    = $4
             summary = $5
-
-            if diff =~ /diff=(\d+)&oldid=(\d+)/ 
+            #new page
+            if flags =~ /N/ and diff =~ /oldid=(\d+)/
+                curid = $1
+                #Open in new thread to speed up things
+                Thread.new() {
+                    htmldiff = @api.getRevision(page, curid)
+                    @db.insertRc(page, flags, diff, user, summary, htmldiff)
+                }
+            #edit
+            elsif diff =~ /diff=(\d+)&oldid=(\d+)/ 
                 curid  = $1
                 previd = $2
 
+                #Open in new thread to speed up things
                 Thread.new() {
                     htmldiff = @api.getDiff(page, curid, previd)
 
-                    @db.insertRc(page, flags, diff, user, summary, htmldiff)
+            #        @db.insertRc(page, flags, diff, user, summary, htmldiff)
                 }
             end
-
         end
     end
 end

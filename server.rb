@@ -98,8 +98,13 @@ class Webserver
         if !rc
             return ShowLogController.new(@db.countRcs, @db.retrieveLog(5)).generateHtml
         end
+        if rc[:flags] =~ /N/
+            newpage = true
+        else
+            newpage = false
+        end
         @db.reviewedRc(rc[:id])
-        controller = ShowDiffController.new(@site, @isAdmin, rc[:diff], rc[:htmldiff], rc[:page], rc[:user], rc[:summary], @db.countRcs, @db.retrieveLog(5))
+        controller = ShowDiffController.new(@site, @isAdmin, rc[:diff], rc[:htmldiff], rc[:page], rc[:user], rc[:summary], @db.countRcs, @db.retrieveLog(5), newpage)
         return controller.generateHtml
     end
 end
