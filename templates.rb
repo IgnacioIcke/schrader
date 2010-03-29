@@ -158,9 +158,9 @@ TemplateDiff = %{
         <a href="<%= @site %>/wiki/User:<%= @user %>" target='_blank'><%= @user %></a> (<a href="<%= @site %>/wiki/User_Talk:<%= @user %>" target='_blank'><%= t.talk %></a>|<a href="<%= @site %>/wiki/Special:Contributions/<%= @user %>" target='_blank'><%= t.contributions %></a>)
     </div>
     <% if @newpage %>
-        <div class="newpage">
-        <%= @htmldiff %>
-        </div>
+        <pre class="newpage">
+<%= @htmldiff %>
+        </pre>
     <% else %>
         <center>
         <table class="diff">

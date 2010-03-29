@@ -67,7 +67,7 @@ class Ircbot < IRC
                 Thread.new() {
                     htmldiff = @api.getDiff(page, curid, previd)
 
-            #        @db.insertRc(page, flags, diff, user, summary, htmldiff)
+                    @db.insertRc(page, flags, diff, user, summary, htmldiff)
                 }
             end
         end

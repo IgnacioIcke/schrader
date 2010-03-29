@@ -278,6 +278,16 @@ ul#loglines{
 
 .newpage{
     background-color: #eef;
-    margin : 10px 50px 10px 50px ; 
+    margin-left: 50px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 95%;
     clear: both;
+}
+
+/* word wrap for pre */
+pre {
+    white-space: pre-wrap;       /* css-3 */
+    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
 }
