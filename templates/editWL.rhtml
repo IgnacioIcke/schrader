@@ -1,0 +1,31 @@
+<script type="text/javascript">
+$(document).ready(function()
+{
+    $('.icondelete').hover(function(){
+        $(this).attr('src','/remove.png');
+    }, function(){
+        $(this).attr('src','/remove-off.png');
+    });
+
+});
+
+</script>
+
+<h1><%= t.whitelisttitle%></h1>
+<a href="/"><%= t.returnToAction%></a>
+<form name="input" action="addToWL" method="get">
+    <label><%= t.username %></label>
+<input type="text" name="user" />
+<input type="submit" value="<%= t.add %>" />
+</form> 
+<form name="input" action="addToWLFromWiki" method="get">
+    <label><%= t.wikipage + ":"   %></label>
+<%= Configuration['site']%>/wiki/<input type="text" name="page" value="Wikipedia:Huggle/Whitelist"/>
+<input type="submit" value="<%= t.add %>" />
+</form> 
+<a href="/clearWL" onclick="return confirm('<%= t.sure %>');"><%= t.clearWL%></a>
+<ul class="whitelist">
+<% @wl.each do |user| %>
+    <li class="whitelist-user"><a href="/removeFromWL?user=<%= user[:id] %>"><img class="icondelete" src="remove-off.png" title="<%= t.remove %>"/></a><%= user[:user] %></li>
+<%end%>
+</ul>

@@ -44,6 +44,7 @@ class Database
         end
         @rcs = @db[:rcs]
     end
+
     # Drops the Rc table and creates it again
     def resetRc
         @db.drop_table(:rcs)
@@ -51,8 +52,13 @@ class Database
     end
 
     #clean Rc: set us up to date
-    def cleanRc
+    def clearRc
         @rcs.update(:reviewed => 1)
+    end
+
+    #clean WL: delete this list
+    def clearWL
+        @wl.delete
     end
 
     # Drops the Rc table and creates it again
@@ -93,10 +99,25 @@ class Database
     # Adds an user to the Whitelist
     # [_user_] user to be inserted
     def addWL(user)
-        @wl.insert(:user => user)
-        #all his changes are reviewed
-        @rcs.filter(:user => user).update(:reviewed => 1)
+        user.chomp!
+        if not @wl.filter(:user => user).first and not user =~ /^\s*$/
+            @wl.insert(:user => user)
+            #all his changes are reviewed
+            @rcs.filter(:user => user).update(:reviewed => 1)
+        end
     end
+
+    # Removes an user from the whitelist
+    # [_id_] user to be inserted
+    def removeFromWL(id)
+        @wl.filter(:id => id).delete
+    end
+
+    # Retrieves the full whitelist
+    def getWL
+        return @wl.order(:user)
+    end
+
 
     # Retrieves the first unreviewe rc
     def retrieveRc
@@ -106,9 +127,13 @@ class Database
         end
         return rc
     end
+
+    # Marks a diff as reviewed
+    # [_id_] id of the diff
     def reviewedRc(id)
         @rcs.filter(:id => id).update(:reviewed => 1)
     end
+
     # returns the number of Rcs
     def countRcs
         return @rcs.filter(:reviewed => 0).count

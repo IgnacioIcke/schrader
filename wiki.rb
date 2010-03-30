@@ -30,6 +30,16 @@ class Mediawiki
         htmldiff = result['query']['pages']['page']['revisions']['rev']['content']
         return htmldiff
     end
+
+    def getPage(page)
+        result = @api.query_prop_revisions(page, 'content', 1)
+        if result['query']['pages']['page'].key? 'revisions'
+            htmldiff = result['query']['pages']['page']['revisions']['rev']['content']
+            return htmldiff
+        else 
+            return nil
+        end
+    end
     # Rollback in a page
     # [_user_] User to revert
     # [_page_] Page in which we do the rollback

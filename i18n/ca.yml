@@ -22,3 +22,12 @@ noRcs: "No n'hi han diffs sense revisar"
 wait: "Wait for it..."
 clean: Netejar la cua
 using: " utilitzant "
+whitelistitle: Llista blanca
+editWL: Editar llista blanca
+add: Afegir
+remove: Esborrar
+username: "nom d'usuari"
+wikipage: Afegir desde llista blanca a la wiki
+clearWL: Esborrar tota la llista
+returnToAction: "Tornar a l'acció"
+sure: "Estas a punt d'esborrar la llista blanca. Estas segur?"

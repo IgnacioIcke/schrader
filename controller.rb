@@ -57,11 +57,19 @@ class ShowLogController < Controller
     end
 end
 
-# Controller for the ShowLog action
+# Controller for the ShowLog snippet
 class ShowLogSnippetController < Controller
     def initialize(numdiffs, log)
         @numdiffs = numdiffs
         @log = log
         @template = TemplateLogSnippet
+    end
+end
+
+# Controller for the editWL action
+class EditWLController < Controller
+    def initialize(wl)
+        @wl = wl 
+        @template = TemplateEditWL
     end
 end

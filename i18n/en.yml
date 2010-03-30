@@ -22,3 +22,12 @@ noRcs: "There are not unreviewed diffs"
 wait: "Wait for it..."
 clean: Clean Queue
 using: " using "
+whitelisttitle: Whitelist
+editWL: Edit Whitelist
+add: Add
+remove: Remove
+username: Username 
+wikipage: Add from whitelist on the wiki
+clearWL: Empy list
+returnToAction: Return to action
+sure: "You are about to delete the whitelist. Are you sure?"

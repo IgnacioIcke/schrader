@@ -214,10 +214,12 @@ body{
   margin: 5px;
 }
 
+h1 {
+  color: #777;
+}
+
 h1#title{
   font-size: 36;
-  color: #777;
-  padding-top: 60px;
   cursor: pointer;
   margin-bottom: 10px;
 }
@@ -290,4 +292,37 @@ pre {
     white-space: pre-wrap;       /* css-3 */
     white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
     white-space: -o-pre-wrap;    /* Opera 7 */
+}
+
+.icondelete {
+    margin-right: 10px;
+}
+
+ul.whitelist{
+    list-style-type: none;
+}
+
+.whitelist-user{
+    margin-top: 7px;
+}
+
+ul.menu{
+    clear: both;
+}
+ul.menu li{
+    display:inline; 
+    list-style-type:none; 
+    margin-left:10px; 
+    padding-left:10px; 
+    border-left:2px solid #ccc;
+}
+
+ul.menu li:first-child {
+    border-left:none;
+}
+
+label {
+    margin-right: 20px;
+    color: #666;
+    font-size: 120%;
 }

@@ -42,8 +42,35 @@ class Webserver
                  controller = ShowLogSnippetController.new(@db.countRcs, @db.retrieveLog(5))
                  session.print controller.generateRawHtml
 
-             when /^\/cleanRc$/
-                 @db.cleanRc()
+             when /^\/editWL$/
+                 session.print "HTTP/1.1 200/OK\r\nContent-type: text/html\r\n\r\n"
+                 session.print editWL
+
+             when /^\/clearWL$/
+                 session.print "HTTP/1.1 200/OK\r\nContent-type: text/html\r\n\r\n"
+                 @db.clearWL()
+                 session.print editWL
+
+             when /^\/clearRc$/
+                 @db.clearRc()
+
+             when /^\/addToWL\?user=(.*)$/
+                 user = CGI::unescape($1)
+                 @db.addWL(user)
+                 session.print "HTTP/1.1 200/OK\r\nContent-type: text/html\r\n\r\n"
+                 session.print editWL
+             when /^\/addToWLFromWiki\?page=(.*)$/
+                 page = CGI::unescape($1)
+
+                 addToWLFromWiki(page)
+                 session.print "HTTP/1.1 200/OK\r\nContent-type: text/html\r\n\r\n"
+                 session.print editWL
+
+             when /^\/removeFromWL\?user=(.*)$/
+                 id = CGI::unescape($1)
+                 @db.removeFromWL(id)
+                 session.print "HTTP/1.1 200/OK\r\nContent-type: text/html\r\n\r\n"
+                 session.print editWL
 
              when /^\/whitelist\?user=(.*)$/
                  user = CGI::unescape($1)
@@ -63,8 +90,12 @@ class Webserver
                  file = File.open('webstuff/favicon.ico', 'rb')
                  session.write file.read
                  file.close
-             when /^\/removerc\.png$/
-                 file = File.open('webstuff/removerc.png', 'rb')
+             when /^\/remove\.png$/
+                 file = File.open('webstuff/remove.png', 'rb')
+                 session.write file.read
+                 file.close
+             when /^\/remove-off\.png$/
+                 file = File.open('webstuff/remove-off.png', 'rb')
                  session.write file.read
                  file.close
              else
@@ -92,6 +123,18 @@ class Webserver
         end
     end
 
+    def addToWLFromWiki(page)
+        wikipage = @api.getPage(page)
+        if wikipage
+            inPres = Regexp.new('<pre>(.*)</pre>', Regexp::MULTILINE)
+            if wikipage =~ inPres
+                userList = $1 
+                userList.each_line do |user| 
+                    @db.addWL(user)
+                end
+            end
+        end
+    end
     # Calls the controller ShowDiffController and sends the html to the client
     def showDiff 
         rc = @db.retrieveRc
@@ -106,6 +149,12 @@ class Webserver
         @db.reviewedRc(rc[:id])
         controller = ShowDiffController.new(@site, @isAdmin, rc[:diff], rc[:htmldiff], rc[:page], rc[:user], rc[:summary], @db.countRcs, @db.retrieveLog(5), newpage)
         return controller.generateHtml
+    end
+
+    # Calls the controller EditWLController to edit the White list
+    def editWL
+        wl = @db.getWL
+        return EditWLController.new(wl).generateHtml
     end
 end
 

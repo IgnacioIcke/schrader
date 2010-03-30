@@ -22,3 +22,12 @@ noRcs: "No hay diffs sin revisar"
 wait: "Wait for it..."
 clean: Limpiar la cola
 using: " usando "
+whitelisttitle: "Lista blanca"
+editWL: Editar lista blanca
+add: Añadir
+remove: Borrar
+username: Nombre de usuario
+wikipage: Añadir desde lista blanca en la wiki
+clearWL: Limpiar la lista
+returnToAction: Volver a la acción
+sure: Estás a punto de borrar la lista blanca. ¿Estás seguro?
