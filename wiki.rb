@@ -9,10 +9,9 @@ class Mediawiki
     # [_username_] The user's name
     # [_password_] The user's password
     # [_apiurl_] Api's URL
-    def initialize(username, password, apiurl, site)
+    def initialize(username, password, apiurl)
         @api = Api.new(nil, nil, username, nil, apiurl)
         @api.login(password)
-        @site = site
     end
     # Gets a diff
     # [_page_] Page 
