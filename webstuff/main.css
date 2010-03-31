@@ -206,6 +206,10 @@ span.diff-html-changed:hover span.tip {
   background-image:url('/icons-simple.png');
   background-position: -250px 50px; 
 }
+.icon-patrol{
+  background-image:url('/icons-simple.png');
+  background-position: -300px 0px; 
+}
 /*End of icons-simple*/
 
 

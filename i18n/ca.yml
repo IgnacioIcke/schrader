@@ -31,3 +31,5 @@ wikipage: Afegir desde llista blanca a la wiki
 clearWL: Esborrar tota la llista
 returnToAction: "Tornar a l'acció"
 sure: "Estas a punt d'esborrar la llista blanca. Estas segur?"
+patrolled: " patrullada"
+patrol: "Marcar com a patrullada"

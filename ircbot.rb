@@ -56,7 +56,7 @@ class Ircbot < IRC
                 #Open in new thread to speed up things
                 Thread.new() {
                     htmldiff = @api.getRevision(page, curid)
-                    @db.insertRc(page, flags, diff, user, summary, htmldiff)
+                    @db.insertRc(page, flags, diff, curid, user, summary, htmldiff)
                 }
             #edit
             elsif diff =~ /diff=(\d+)&oldid=(\d+)/ 
@@ -67,7 +67,7 @@ class Ircbot < IRC
                 Thread.new() {
                     htmldiff = @api.getDiff(page, curid, previd)
 
-                    @db.insertRc(page, flags, diff, user, summary, htmldiff)
+                    @db.insertRc(page, flags, diff, curid, user, summary, htmldiff)
                 }
             end
         end

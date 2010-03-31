@@ -77,6 +77,12 @@ class Webserver
                  @db.addWL(user)
                  @db.insertLog(user + t.whitelisted)
 
+             when /^\/patrol\?id=(.*)&page=(.*)$/
+                 rcid = $1
+                 page = $2
+                 @api.patrol(rcid, page)
+                 @db.insertLog(page + t.patrolled)
+
              when /^\/main\.css$/
                  session.print "HTTP/1.1 200/OK\r\nContent-type: text/css\r\n\r\n"
                  file = File.open('webstuff/main.css')
@@ -147,7 +153,7 @@ class Webserver
             newpage = false
         end
         @db.reviewedRc(rc[:id])
-        controller = ShowDiffController.new(@site, @isAdmin, rc[:diff], rc[:htmldiff], rc[:page], rc[:user], rc[:summary], @db.countRcs, @db.retrieveLog(5), newpage)
+        controller = ShowDiffController.new(@site, @isAdmin, rc[:diff], rc[:htmldiff], rc[:rcid], rc[:page], rc[:user], rc[:summary], @db.countRcs, @db.retrieveLog(5), newpage)
         return controller.generateHtml
     end
 

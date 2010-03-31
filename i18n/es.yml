@@ -30,4 +30,6 @@ username: Nombre de usuario
 wikipage: Añadir desde lista blanca en la wiki
 clearWL: Limpiar la lista
 returnToAction: Volver a la acción
-sure: Estás a punto de borrar la lista blanca. ¿Estás seguro?
+sure: "Estás a punto de borrar la lista blanca. ¿Estás seguro?"
+patrolled: " patrullada"
+patrol: "Marcar como patrullada"

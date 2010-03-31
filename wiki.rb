@@ -9,9 +9,10 @@ class Mediawiki
     # [_username_] The user's name
     # [_password_] The user's password
     # [_apiurl_] Api's URL
-    def initialize(username, password, apiurl)
+    def initialize(username, password, apiurl, site)
         @api = Api.new(nil, nil, username, nil, apiurl)
         @api.login(password)
+        @site = site
     end
     # Gets a diff
     # [_page_] Page 
@@ -51,6 +52,15 @@ class Mediawiki
             return false
         else 
             return true
+        end
+    end
+
+    # Marks a page as patrolled
+    # [_rcid_] version to mark
+    def patrol(rcid, page)
+        result = @api.query_list_recentchanges(nil, nil, nil, nil, nil, nil, 'patrol', nil, 1)
+        if result['query']['recentchanges']['rc'].key? 'patroltoken'
+            token = result['query']['recentchanges']['rc']['patroltoken']
         end
     end
 end
