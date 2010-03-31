@@ -98,7 +98,7 @@
         }
         function patrol(){
             $.ajax({
-                url: '/patrol?id=<%= @rcid %>&page=<%= @page %>'
+                url: '/patrol?id=<%= @rcid %>&page=<%= @page.escapejs %>'
             }); 
             next();
         }
