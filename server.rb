@@ -17,6 +17,7 @@ class Webserver
         @api = api
         @site = site
         @isAdmin = true
+        @lastdiff = 0
     end
 
     # Main handler. Handles the different requests.
@@ -26,7 +27,12 @@ class Webserver
              case $1
              when /^\/$/
                  session.print "HTTP/1.1 200/OK\r\nContent-type: text/html\r\n\r\n"
-                 session.print showDiff
+                 rc = @db.retrieveRc(@lastdiff)
+                 session.print showDiff(rc)
+             when /^\/lastDiff$/
+                 session.print "HTTP/1.1 200/OK\r\nContent-type: text/html\r\n\r\n"
+                 rc = @db.retrieveLastRc(@lastdiff)
+                 session.print showDiff(rc)
              when /^\/rollback\?user=(.*)&page=(.*)$/
                  session.print "HTTP/1.1 200/OK\r\nContent-type: text/html\r\n\r\n"
                  user = CGI::unescape($1)
@@ -39,7 +45,7 @@ class Webserver
                  end
              when /^\/log$/
                  session.print "HTTP/1.1 200/OK\r\nContent-type: text/html\r\n\r\n"
-                 controller = ShowLogSnippetController.new(@db.countRcs, @db.retrieveLog(5))
+                 controller = ShowLogSnippetController.new(@db.countRcs(@lastdiff), @db.retrieveLog(5))
                  session.print controller.generateRawHtml
 
              when /^\/editWL$/
@@ -142,18 +148,17 @@ class Webserver
         end
     end
     # Calls the controller ShowDiffController and sends the html to the client
-    def showDiff 
-        rc = @db.retrieveRc
+    def showDiff(rc)
         if !rc
-            return ShowLogController.new(@db.countRcs, @db.retrieveLog(5)).generateHtml
+            return ShowLogController.new(@db.countRcs(@lastdiff), @db.retrieveLog(5)).generateHtml
         end
         if rc[:flags] =~ /N/
             newpage = true
         else
             newpage = false
         end
-        @db.reviewedRc(rc[:id])
-        controller = ShowDiffController.new(@site, @isAdmin, rc[:diff], rc[:htmldiff], rc[:rcid], rc[:page], rc[:user], rc[:summary], @db.countRcs, @db.retrieveLog(5), newpage)
+        @lastdiff = rc[:id]
+        controller = ShowDiffController.new(@site, @isAdmin, rc[:diff], rc[:htmldiff], rc[:rcid], rc[:page], rc[:user], rc[:summary], @db.countRcs(@lastdiff), @db.retrieveLog(5), newpage)
         return controller.generateHtml
     end
 

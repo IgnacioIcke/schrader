@@ -158,6 +158,11 @@ span.diff-html-changed:hover span.tip {
   background-position: 0px 0px; 
 }
 
+.icon-previous{
+  background-image:url('/icons-simple.png');
+  background-position: -300px 50px; 
+}
+
 .icon-revert{
   background-image:url('/icons-simple.png');
   background-position: -50px 0px; 

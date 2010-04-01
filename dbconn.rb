@@ -120,13 +120,18 @@ class Database
         return @wl.order(:user)
     end
 
+    # Retrieves the first unreviewe rc
+    # [_id_] last reviewed id
+    def retrieveLastRc(id)
+        rc = @rcs.filter(:reviewed => 0).filter(:id < id).order(:created_at).last
+        return rc
+    end
+
 
     # Retrieves the first unreviewe rc
-    def retrieveRc
-        rc = @rcs.filter(:reviewed => 0).order(:created_at).first
-        if (rc)
-            rc.update(:reviewed => 1)
-        end
+    # [_id_] last reviewed id
+    def retrieveRc(id)
+        rc = @rcs.filter(:reviewed => 0).filter(:id > id).order(:created_at).first
         return rc
     end
 
@@ -137,7 +142,8 @@ class Database
     end
 
     # returns the number of Rcs
-    def countRcs
-        return @rcs.filter(:reviewed => 0).count
+    # [_id_] last reviewed id
+    def countRcs(id)
+        return @rcs.filter(:reviewed => 0).filter(:id > id).count
     end
 end

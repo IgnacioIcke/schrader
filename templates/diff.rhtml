@@ -10,6 +10,9 @@
                     case 32:
                         next();
                     break;
+                    case 90:
+                        previous();
+                    break;
                     case 88:
                         rollback();
                     break;
@@ -51,6 +54,9 @@
         });
         function next(){
             location.href = '/';
+        }
+        function previous(){
+            location.href = '/lastDiff';
         }
         function rollback(){
             $.ajax({
@@ -108,6 +114,7 @@
     </div>
     <div class="buttons">
     <button class="icon icon-next" onClick="next()" title="<%= t.next %> (space)"></button>
+    <button class="icon icon-previous" onClick="previous()" title="<%= t.previous %> (z)"></button>
     <button class="icon icon-revert" onClick="rollback()" title="<%= t.rollback %> (x)"></button>
     <!--<button class="icon icon-revertwarn" onClick="revertAndWarn()" title="<%= t.rollbackandwarn %> (a)"></button>
     <button class="icon icon-warn" onClick="warn()" title="<%= t.warn %> (w)" ></button>-->
