@@ -1,10 +1,28 @@
 = Schrader 
 
-Schrader is a tool for patrolling MediaWiki projects
+Schrader is a tool for patrolling MediaWiki projects.
 
 == Installation
 
-You need 
+There are two possibilities for running schrader. The simplest is running the standalone executable schraderlinux. It works currently only for linux
+
+=== Using the standalone executable
+
+To do this, clone the schrader repository:
+
+    git clone git://github.com/IgnacioIcke/schrader.git
+
+Alternatively, you can download a zip package from http://github.com/IgnacioIcke/schrader (the link is called "download source")
+
+Configure it (see below "Usage" section).
+
+And run ./schraderlinux
+
+Then, point your browser to http://localhost:3000
+
+=== Using the sources 
+
+You will need 
 * ruby 1.8 and rubygems1.8 (sudo apt-get install ruby1.8 rubygems1.8)
 
 IMPORTANT. Make sure that you are running ruby1.8 and not ruby1.9 by running
@@ -22,7 +40,7 @@ Then, clone the schrader repository:
 
     git clone git://github.com/IgnacioIcke/schrader.git
 
-Alternatively, you can download a zip package from http://github.com/IgnacioIcke/schrader
+Alternatively, you can download a zip package from http://github.com/IgnacioIcke/schrader (the link is called "download source")
 
 == Usage
 
